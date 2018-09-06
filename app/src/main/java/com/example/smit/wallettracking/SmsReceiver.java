@@ -1,11 +1,15 @@
 package com.example.smit.wallettracking;;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 
 public class SmsReceiver extends BroadcastReceiver {
     private String message;
@@ -34,8 +38,10 @@ public class SmsReceiver extends BroadcastReceiver {
 
        Toast.makeText(context,mes+" "+phoneNumber,Toast.LENGTH_SHORT).show();
 
-  //      MainActivity mainActivity=new MainActivity().returnCurreentInstance();
-//        mainActivity.setTextInView("message");
+        Context context1=MainActivity.context;
+        MainActivity mainActivity=(MainActivity)context1;
+        mainActivity.setTextInView(message);
+
 
     }
 }
