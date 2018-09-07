@@ -10,12 +10,16 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import static android.content.Context.ACTIVITY_SERVICE;
 
 public class SmsReceiver extends BroadcastReceiver {
     private String message;
     private static SharedPreferences sharedPreferences;
     private static int count=0;
+
+    DatabaseHelper myDb;
 
     public static int getCount() {
         return count;
@@ -58,11 +62,19 @@ public class SmsReceiver extends BroadcastReceiver {
 
             StringMessage stringMessage=new StringMessage(message);
             stringMessage.preprocessing();
+
+            String pos = stringMessage.getPOS();
+            Double Rs = stringMessage.getRs();
+            Date date = stringMessage.getDate();
+            String company = stringMessage.getCompanyName();
+            String txn = stringMessage.getTxn();
+
             String test=stringMessage.getPOS()+" "+stringMessage.getRs()+" "+stringMessage.getDate()+" "+stringMessage.getCompanyName()+
-                    " "+stringMessage.getTxn();
+                    " "+txn;
+
             //Toast.makeText(context,stringMessage.getPOS()+" "+stringMessage.getRS(),Toast.LENGTH_LONG).show();
             mainActivity.setTextInView(test);
-
+            mainActivity.setDatabase(pos,Rs,date,company,txn);
         }
     }
 }
