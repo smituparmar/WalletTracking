@@ -7,7 +7,7 @@ import java.util.Date;
 
 
 public class StringMessage {
-    private String POS,RS,message,txn,companyName;
+    private String POS,RS,message,txn,companyName,UPI;
     private Double Rs;
     private ArrayList<String> msg;
     private Date date;
@@ -24,6 +24,11 @@ public class StringMessage {
         }
         return output;
     }
+
+    public String getUPI() {
+        return UPI;
+    }
+
     public String getPOS()
     {
         return POS;
@@ -60,6 +65,7 @@ public class StringMessage {
         date=null;
         txn="\0";
         companyName="\0";
+        UPI="\0";
     }
 
     public void preprocessing(){
@@ -138,7 +144,14 @@ public class StringMessage {
                     e.printStackTrace();
                 }
             }
+            int u=msg.indexOf("UPI");
+            if(u!=-1)
+            {
+                UPI=msg.get(u+2);
+                UPI=UPI.substring(0,UPI.length()-9);
+            }
         }
     }
+
 }
 
