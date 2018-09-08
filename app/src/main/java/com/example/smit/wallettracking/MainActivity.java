@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
             userRs.add(rs);
             userPos.add(pos);
             currDate.add(String.valueOf(date));
-
             CustomAdapter customAdapter = new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
             recyclerView.setAdapter(customAdapter);
         }
