@@ -90,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         StringBuffer buffer = new StringBuffer();
-        while (res.moveToNext()){
+        res.moveToLast();
+        while (res.moveToPrevious()){
             buffer.append("ID :"+res.getString(0)+"\n");
             buffer.append("POS :"+res.getString(1)+"\n");
             buffer.append("RS :"+res.getString(2)+"\n");
