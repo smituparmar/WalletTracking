@@ -8,10 +8,15 @@ import android.provider.Telephony;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
     static int status=0;
     SmsReceiver smsReceiver;
     public static Context context;
+    ArrayList<String> companyName=new ArrayList<String>();
+    ArrayList<Double> userRs=new ArrayList<Double>();
+    ArrayList<String> userPos=new ArrayList<String>();
+    ArrayList<String> currDate=new ArrayList<String>();
+    RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +43,12 @@ public class MainActivity extends AppCompatActivity {
         textView=(TextView) findViewById(R.id.textView);
 
         textView.setText(context.toString());
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
 
+        CustomAdapter customAdapter = new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
+        recyclerView.setAdapter(customAdapter);
 
     }
 
@@ -50,10 +66,21 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setDatabase(String pos, Double rs, Date date, String company, String txn){
         boolean isInserted = myDb.insertData(pos,rs,txn,company,date,"prit");
-        if (isInserted==true)
-            Toast.makeText(MainActivity.this,"Data Inserted", Toast.LENGTH_LONG).show();
+        if (isInserted==true) {
+            Toast.makeText(MainActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
+            companyName.add(company);
+            userRs.add(rs);
+            userPos.add(pos);
+            currDate.add(String.valueOf(date));
+
+            CustomAdapter customAdapter = new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
+            recyclerView.setAdapter(customAdapter);
+        }
+
         else
             Toast.makeText(MainActivity.this,"Data Not Inserted", Toast.LENGTH_LONG).show();
+
+
 
         viewAll();
     }

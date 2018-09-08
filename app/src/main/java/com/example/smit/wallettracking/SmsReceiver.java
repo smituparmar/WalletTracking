@@ -74,6 +74,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
             //Toast.makeText(context,stringMessage.getPOS()+" "+stringMessage.getRS(),Toast.LENGTH_LONG).show();
             mainActivity.setTextInView(test);
+
             mainActivity.setDatabase(pos,Rs,date,company,txn);
         }
     }
