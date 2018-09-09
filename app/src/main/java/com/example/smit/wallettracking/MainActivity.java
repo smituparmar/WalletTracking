@@ -18,7 +18,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper myDb;
-    TextView textView;
+    TextView textView,textView2;
     static int status=0;
     SmsReceiver smsReceiver;
     public static Context context;
@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         myDb = new DatabaseHelper(this);
 
         textView=(TextView) findViewById(R.id.textView);
+        textView2=(TextView) findViewById(R.id.textView2);
 
-        textView.setText(context.toString());
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -57,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
             currDate.add(cursor.getString(5));
         }
 
+        Double sum=new Double(0);
+        for(Double d:userRs)
+        {
+            sum+=d;
+        }
+
+        textView.setText(String.valueOf(sum));
+
         customAdapter=new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
         recyclerView.setAdapter(customAdapter);
 
@@ -67,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(context,this.toString(),Toast.LENGTH_SHORT).show();
     }
 
-    public void setTextInView(String s)
+    public void setTextInView(TextView text,String s)
     {
-        textView=(TextView) findViewById(R.id.textView);
-        textView.setText(s);
+        text=(TextView) findViewById(R.id.textView);
+        text.setText(s);
     }
 
     public void setDatabase(String pos, Double rs, Date date, String company, String txn){

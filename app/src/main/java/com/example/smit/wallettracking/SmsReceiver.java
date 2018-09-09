@@ -73,7 +73,14 @@ public class SmsReceiver extends BroadcastReceiver {
                     " "+txn;
 
             //Toast.makeText(context,stringMessage.getPOS()+" "+stringMessage.getRS(),Toast.LENGTH_LONG).show();
-            mainActivity.setTextInView(test);
+            Double previous=stringMessage.checkNumeric(mainActivity.textView.getText().toString());
+
+            Double current=new Double(previous+Rs);
+
+            mainActivity.textView.setText(String.valueOf(current));
+
+
+
 
             mainActivity.setDatabase(pos,Rs,date,company,txn);
         }
