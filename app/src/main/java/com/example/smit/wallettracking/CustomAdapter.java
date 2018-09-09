@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -60,6 +61,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             rs = (TextView) itemView.findViewById(R.id.money);
             pos = (TextView) itemView.findViewById(R.id.tvnum);
             date = (TextView) itemView.findViewById(R.id.tvdate);
+
         }
+
     }
 }
