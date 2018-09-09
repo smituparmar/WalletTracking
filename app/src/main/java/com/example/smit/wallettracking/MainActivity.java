@@ -1,22 +1,18 @@
 package com.example.smit.wallettracking;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.provider.Telephony;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> userPos=new ArrayList<String>();
     ArrayList<String> currDate=new ArrayList<String>();
     RecyclerView recyclerView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +45,34 @@ public class MainActivity extends AppCompatActivity {
         CustomAdapter customAdapter = new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
         recyclerView.setAdapter(customAdapter);
 
-    }
+        // Pre load database
 
+        Cursor cursor=myDb.getAllData();
+
+        cursor.moveToLast();
+        while (cursor.moveToPrevious()) {
+            companyName.add(cursor.getString(4));
+            userPos.add(cursor.getString(1));
+            userRs.add(cursor.getDouble(2));
+            currDate.add(cursor.getString(5));
+        }
+
+        customAdapter=new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
+        recyclerView.setAdapter(customAdapter);
+
+    }
 
     public void showToast(Context context)
     {
         Toast.makeText(context,this.toString(),Toast.LENGTH_SHORT).show();
     }
 
-
     public void setTextInView(String s)
     {
         textView=(TextView) findViewById(R.id.textView);
         textView.setText(s);
     }
+
     public void setDatabase(String pos, Double rs, Date date, String company, String txn){
         boolean isInserted = myDb.insertData(pos,rs,txn,company,date,"prit");
         if (isInserted==true) {
@@ -75,14 +84,12 @@ public class MainActivity extends AppCompatActivity {
             CustomAdapter customAdapter = new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
             recyclerView.setAdapter(customAdapter);
         }
-
-        else
+       else
             Toast.makeText(MainActivity.this,"Data Not Inserted", Toast.LENGTH_LONG).show();
-
-
 
         viewAll();
     }
+
     public void viewAll(){
         Cursor res =  myDb.getAllData();
         if(res.getCount()==0) {
@@ -100,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
             buffer.append("DATE :"+res.getString(5)+"\n");
             buffer.append("UPI :"+res.getString(6)+"\n\n");
         }
-
         //show all data
         showMessage("Message",buffer.toString());
     }
+
     public void showMessage(String title, String Message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);

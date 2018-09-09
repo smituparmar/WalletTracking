@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
-
 public class StringMessage {
     private String POS,RS,message,txn,companyName,UPI;
     private Double Rs;

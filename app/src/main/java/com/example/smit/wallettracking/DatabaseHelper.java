@@ -34,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME);
         onCreate(db);
     }
+
     public boolean insertData(String pos, Double rs, String tex, String company, Date date, String upi){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -49,6 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             return true;
     }
+
     public Cursor getAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
