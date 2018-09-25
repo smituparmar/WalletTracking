@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
         customAdapter=new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
         recyclerView.setAdapter(customAdapter);
 
+        recyclerView.addItemDecoration(new DividerItemDecoration(context,
+                DividerItemDecoration.VERTICAL));
+
     }
 
     public void showToast(Context context)
@@ -91,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
             currDate.add(String.valueOf(date));
             CustomAdapter customAdapter = new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
             recyclerView.setAdapter(customAdapter);
+            recyclerView.addItemDecoration(new DividerItemDecoration(context,
+                    DividerItemDecoration.VERTICAL));
         }
        else
             Toast.makeText(MainActivity.this,"Data Not Inserted", Toast.LENGTH_LONG).show();

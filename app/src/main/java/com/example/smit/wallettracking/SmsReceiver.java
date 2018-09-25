@@ -42,7 +42,6 @@ public class SmsReceiver extends BroadcastReceiver {
         SharedPreferences.Editor edit=sharedPreferences.edit();
         Object[] pdus = (Object[]) pudsBundle.get("pdus");
         SmsMessage messages = SmsMessage.createFromPdu((byte[])pdus[0]);
-        // Log.i(TAG,  messages.getMessageBody());
 
         // Todo : Show Message In Toast
 
@@ -52,38 +51,40 @@ public class SmsReceiver extends BroadcastReceiver {
 
         message=mes;
 
+        Context context1=goToMainActivity();
 
-       Toast.makeText(context,mes+" "+phoneNumber+" "+sharedPreferences.toString(),Toast.LENGTH_SHORT).show();
-       count++;
-
-        Context context1=MainActivity.context;
         if(context1!=null) {
             MainActivity mainActivity = (MainActivity) context1;
 
             StringMessage stringMessage=new StringMessage(message);
             stringMessage.preprocessing();
 
-            String pos = stringMessage.getPOS();
-            Double Rs = stringMessage.getRs();
-            Date date = stringMessage.getDate();
-            String company = stringMessage.getCompanyName();
-            String txn = stringMessage.getTxn();
+//Variable defines for toast and textview
+//            String pos = stringMessage.getPOS();
+//            Double Rs = stringMessage.getRs();
+//            Date date = stringMessage.getDate();
+//            String company = stringMessage.getCompanyName();
+//            String txn = stringMessage.getTxn();
+//
+//            String test=stringMessage.getPOS()+" "+stringMessage.getRs()+" "+stringMessage.getDate()+" "+stringMessage.getCompanyName()+
+//                    " "+txn;
+//
+//            //Toast.makeText(context,stringMessage.getPOS()+" "+stringMessage.getRS(),Toast.LENGTH_LONG).show();
+//            Double previous=stringMessage.checkNumeric(mainActivity.textView.getText().toString());
+//
+//            Double current=new Double(previous+Rs);
+//
+//            mainActivity.textView.setText(String.valueOf(current));
+//
+//            mainActivity.setDatabase(pos,Rs,date,company,txn);
 
-            String test=stringMessage.getPOS()+" "+stringMessage.getRs()+" "+stringMessage.getDate()+" "+stringMessage.getCompanyName()+
-                    " "+txn;
-
-            //Toast.makeText(context,stringMessage.getPOS()+" "+stringMessage.getRS(),Toast.LENGTH_LONG).show();
-            Double previous=stringMessage.checkNumeric(mainActivity.textView.getText().toString());
-
-            Double current=new Double(previous+Rs);
-
-            mainActivity.textView.setText(String.valueOf(current));
-
-
-
-
-            mainActivity.setDatabase(pos,Rs,date,company,txn);
+            new databaseClass(stringMessage).putInTables(context);
         }
+    }
+
+    protected Context goToMainActivity()
+    {
+        return MainActivity.context;
     }
 }
 
