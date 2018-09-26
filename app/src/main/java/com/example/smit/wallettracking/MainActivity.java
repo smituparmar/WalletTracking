@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper myDb;
+    MySqliteHandlerBank sqldb;
     TextView textView,textView2;
     static int status=0;
     SmsReceiver smsReceiver;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Double> userRs=new ArrayList<Double>();
     ArrayList<String> userPos=new ArrayList<String>();
     ArrayList<String> currDate=new ArrayList<String>();
+    ArrayList<Bank> bankByMonth=new ArrayList<Bank>();
     RecyclerView recyclerView;
 
     @Override
@@ -34,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         context=MainActivity.this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myDb = new DatabaseHelper(this);
+        //myDb = new DatabaseHelper(this);
+        sqldb = new MySqliteHandlerBank(this);
 
         textView=(TextView) findViewById(R.id.textView);
         textView2=(TextView) findViewById(R.id.textView2);
@@ -47,15 +51,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(customAdapter);
 
         // Pre load database
+        Date date = new Date() ;
+        String month  = (String) DateFormat.format("MMM",  date);
+        String year   = (String) DateFormat.format("yyyy", date);
+       // Cursor cursor=myDb.getAllData();
+        bankByMonth = (ArrayList<Bank>) sqldb.getAllBanks(month,year);
 
-        Cursor cursor=myDb.getAllData();
-
-        cursor.moveToLast();
-        while (cursor.moveToPrevious()) {
-            companyName.add(cursor.getString(4));
-            userPos.add(cursor.getString(1));
-            userRs.add(cursor.getDouble(2));
-            currDate.add(cursor.getString(5));
+        for(Bank b:bankByMonth) {
+            companyName.add(b.getCompanyName());
+            userPos.add(b.getPos());
+            userRs.add(b.getRs());
+            //currDate.add(b..getString(5));
         }
 
         Double sum=new Double(0);

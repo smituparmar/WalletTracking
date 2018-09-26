@@ -40,7 +40,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.name.setText((CharSequence) Names.get(position));
         holder.rs.setText(String.valueOf((Double) userRs.get(position)));
         holder.pos.setText((CharSequence) userPos.get(position));
-        holder.date.setText((CharSequence) curdate.get(position));
+//        holder.date.setText((CharSequence) curdate.get(position));
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

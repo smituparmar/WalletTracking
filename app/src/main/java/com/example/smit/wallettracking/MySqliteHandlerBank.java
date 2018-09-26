@@ -117,6 +117,32 @@ public class MySqliteHandlerBank extends SQLiteOpenHelper {
         return bankList;
     }
 
+    public List<Bank> getAllBanks(String month, String year)
+    {
+        List<Bank> bankList=new ArrayList<>();
+
+        String selectAllQuery="SELECT * FROM " + TABLE_BANK + " WHERE " + COLUMN_MONTH + " = " +  "month" + " and " +COLUMN_YEAR + " = " + "year";
+        SQLiteDatabase database= this.getWritableDatabase();
+        Cursor cursor=database.rawQuery(selectAllQuery,null);
+        if(cursor.moveToFirst())
+        {
+            do{
+                Bank bank=new Bank();
+                bank.setId(Integer.parseInt(cursor.getString(0)));
+                bank.setPos(cursor.getString(1));
+                bank.setCompanyName(cursor.getString(2));
+                bank.setMonth(cursor.getString(3));
+                bank.setYear(cursor.getString(4));
+                bank.setTxn(cursor.getString(5));
+                bank.setRs(Double.parseDouble(cursor.getString(6)));
+
+                bankList.add(bank);
+            }while (cursor.moveToNext());
+        }
+
+        return bankList;
+    }
+
     public int updateBank(Bank bank)
     {
         SQLiteDatabase database=this.getWritableDatabase();

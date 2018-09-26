@@ -58,7 +58,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
             StringMessage stringMessage=new StringMessage(message);
             stringMessage.preprocessing();
-
+            Toast.makeText(context, mes, Toast.LENGTH_SHORT).show();
 //Variable defines for toast and textview
 //            String pos = stringMessage.getPOS();
 //            Double Rs = stringMessage.getRs();
