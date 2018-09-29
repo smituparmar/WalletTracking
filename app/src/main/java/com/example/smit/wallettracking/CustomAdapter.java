@@ -3,6 +3,7 @@ package com.example.smit.wallettracking;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,5 +65,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         }
 
+    }
+
+    public void clear()
+    {
+        final int size=Names.size();
+        Log.i("Size of list",String.valueOf(size));
+        for(int i=0;i<size;i++)
+        {
+            Names.remove(0);
+            userRs.remove(0);
+            userPos.remove(0);
+//            curdate.remove(0);
+        }
+        notifyItemRangeRemoved(0,size);
     }
 }

@@ -129,8 +129,6 @@ public class MySqliteHandlerBank extends SQLiteOpenHelper {
         {
             do{
                 Bank bank=new Bank();
-                if(monthlySpend.context!=null)
-                    Toast.makeText(monthlySpend.context,cursor.getString(2),Toast.LENGTH_SHORT).show();
                 bank.setId(Integer.parseInt(cursor.getString(0)));
                 bank.setPos(cursor.getString(1));
                 bank.setCompanyName(cursor.getString(2));
