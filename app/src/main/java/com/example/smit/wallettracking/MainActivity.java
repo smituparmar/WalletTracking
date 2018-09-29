@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
             userRs.add(b.getRs());
             //currDate.add(b..getString(5));
         }
+        Collections.reverse(companyName);
+        Collections.reverse(userPos);
+        Collections.reverse(userRs);
 
         Double sum=new Double(0);
         for(Double d:userRs)
@@ -70,13 +74,15 @@ public class MainActivity extends AppCompatActivity {
             sum+=d;
         }
 
-        textView.setText(String.valueOf(sum));
+
 
         customAdapter=new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
         recyclerView.setAdapter(customAdapter);
 
-        recyclerView.addItemDecoration(new DividerItemDecoration(context,
-                DividerItemDecoration.VERTICAL));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(context,
+//                DividerItemDecoration.VERTICAL));
+
+        textView.setText(String.valueOf(sum));
 
     }
 

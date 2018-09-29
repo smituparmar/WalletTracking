@@ -51,14 +51,22 @@ public class SmsReceiver extends BroadcastReceiver {
 
         message=mes;
 
+        StringMessage stringMessage=new StringMessage(message);
+        stringMessage.preprocessing();
+        new databaseClass(stringMessage).putInTables(context);
+
         Context context1=goToMainActivity();
 
         if(context1!=null) {
             MainActivity mainActivity = (MainActivity) context1;
 
-            StringMessage stringMessage=new StringMessage(message);
-            stringMessage.preprocessing();
             Toast.makeText(context, mes, Toast.LENGTH_SHORT).show();
+
+            mainActivity.finish();
+            mainActivity.overridePendingTransition(0, 0);
+            context.startActivity(mainActivity.getIntent());
+            mainActivity.overridePendingTransition(0, 0);
+
 //Variable defines for toast and textview
 //            String pos = stringMessage.getPOS();
 //            Double Rs = stringMessage.getRs();
@@ -78,7 +86,6 @@ public class SmsReceiver extends BroadcastReceiver {
 //
 //            mainActivity.setDatabase(pos,Rs,date,company,txn);
 
-            new databaseClass(stringMessage).putInTables(context);
         }
     }
 
