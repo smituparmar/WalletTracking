@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,13 +122,15 @@ public class MySqliteHandlerBank extends SQLiteOpenHelper {
     {
         List<Bank> bankList=new ArrayList<>();
 
-        String selectAllQuery="SELECT * FROM " + TABLE_BANK + " WHERE " + COLUMN_MONTH + " = " +  "month" + " and " +COLUMN_YEAR + " = " + "year";
+        String selectAllQuery="SELECT * FROM " + TABLE_BANK + " WHERE " + COLUMN_MONTH + " = '" +  month + "' and " +COLUMN_YEAR + " = '" + year+"'";
         SQLiteDatabase database= this.getWritableDatabase();
         Cursor cursor=database.rawQuery(selectAllQuery,null);
         if(cursor.moveToFirst())
         {
             do{
                 Bank bank=new Bank();
+                if(monthlySpend.context!=null)
+                    Toast.makeText(monthlySpend.context,cursor.getString(2),Toast.LENGTH_SHORT).show();
                 bank.setId(Integer.parseInt(cursor.getString(0)));
                 bank.setPos(cursor.getString(1));
                 bank.setCompanyName(cursor.getString(2));

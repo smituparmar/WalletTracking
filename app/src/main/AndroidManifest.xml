@@ -30,13 +30,15 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ViewListContent"></activity>
+        <activity android:name=".ViewListContent" />
 
         <receiver android:name=".DateChange">
             <intent-filter android:priority="2148463">
-                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="android.intent.action.DATE_CHANGED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".monthlySpend"></activity>
     </application>
 
 </manifest>

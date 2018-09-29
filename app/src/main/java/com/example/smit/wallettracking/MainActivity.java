@@ -1,6 +1,7 @@
 package com.example.smit.wallettracking;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -9,6 +10,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> currDate=new ArrayList<String>();
     ArrayList<Bank> bankByMonth=new ArrayList<Bank>();
     RecyclerView recyclerView;
+    Button show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +47,26 @@ public class MainActivity extends AppCompatActivity {
 
         textView=(TextView) findViewById(R.id.textView);
         textView2=(TextView) findViewById(R.id.textView2);
+        show = (Button)findViewById(R.id.btnshow);
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               startActivity(new Intent(MainActivity.this,monthlySpend.class));
+            }
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        CustomAdapter customAdapter = new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
-        recyclerView.setAdapter(customAdapter);
+//        CustomAdapter customAdapter = new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
+//        recyclerView.setAdapter(customAdapter);
 
         // Pre load database
         Date date = new Date() ;
         String month  = (String) DateFormat.format("MMM",  date);
         String year   = (String) DateFormat.format("yyyy", date);
+        Toast.makeText(this, month, Toast.LENGTH_SHORT).show();
        // Cursor cursor=myDb.getAllData();
         bankByMonth = (ArrayList<Bank>) sqldb.getAllBanks(month,year);
 
@@ -74,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
             sum+=d;
         }
 
-
-
+        CustomAdapter customAdapter;
         customAdapter=new CustomAdapter(companyName,userRs,userPos,currDate,MainActivity.this);
         recyclerView.setAdapter(customAdapter);
 
