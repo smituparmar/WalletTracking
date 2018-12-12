@@ -10,8 +10,13 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper myDb;
     MySqliteHandlerBank sqldb;
-    TextView textView,textView2;
+    TextView textView,textView2,budgetpopup,closePopupBtn,setLimit,spendMoney;
     static int status=0;
     SmsReceiver smsReceiver;
     public static Context context;
@@ -36,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Bank> bankByMonth=new ArrayList<Bank>();
     RecyclerView recyclerView;
     Button show;
+    LinearLayout linearLayout1;
+    PopupWindow popupWindow;
+    EditText limitmoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,43 @@ public class MainActivity extends AppCompatActivity {
 
         textView=(TextView) findViewById(R.id.textView);
         textView2=(TextView) findViewById(R.id.textView2);
+        spendMoney=(TextView)findViewById(R.id.spend);
+        budgetpopup=(TextView)findViewById(R.id.tvbudget);
+        linearLayout1 = (LinearLayout) findViewById(R.id.linearLayout1);
+
+        budgetpopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater layoutInflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View customView = layoutInflater.inflate(R.layout.budget,null);
+                closePopupBtn = (TextView) customView.findViewById(R.id.closePopupBtn);
+                setLimit = (TextView)customView.findViewById(R.id.SetPopupBtn);
+                limitmoney = (EditText)customView.findViewById(R.id.money);
+
+                //instantiate popup window
+                popupWindow = new PopupWindow(customView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                //display the popup window
+                popupWindow.showAtLocation(linearLayout1, Gravity.CENTER, 0, 0);
+
+                //close the popup window on button click
+                closePopupBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+                setLimit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        spendMoney.setText(limitmoney.getText().toString());
+                        popupWindow.dismiss();
+                    }
+                });
+
+            }
+        });
+
         show = (Button)findViewById(R.id.btnshow);
         show.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
         String month  = (String) DateFormat.format("MMM",  date);
         String year   = (String) DateFormat.format("yyyy", date);
         Toast.makeText(this, month, Toast.LENGTH_SHORT).show();
+
+        textView2.setText(month);
        // Cursor cursor=myDb.getAllData();
         bankByMonth = (ArrayList<Bank>) sqldb.getAllBanks(month,year);
 

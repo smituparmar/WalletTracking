@@ -24,26 +24,80 @@
                 android:layout_width="wrap_content"
                 android:layout_height="39dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/textView"
-                android:layout_marginStart="42dp"
-                android:text="Total Cost"
+                android:layout_alignParentTop="true"
+                android:text="Month"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="37dp"
+                android:layout_height="34dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="₹"
+                android:paddingLeft="15dp"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="106dp"
-                android:layout_height="34dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="87dp"
-                android:layout_marginTop="35dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/textView1"
                 android:text="0"
-                android:textSize="20sp" />
-            <Button
+                android:textSize="35sp" />
+
+            <TextView
+                android:layout_width="106dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="25dp"
+                android:text="Safe To spend " />
+
+            <TextView
+                android:id="@+id/spend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Show"
-                android:id="@+id/btnshow"/>
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="102dp"
+                android:text="1.2"
+                android:layout_marginBottom="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="130dp"
+                android:text="K /day" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set Budget"
+                    android:paddingLeft="5dp"
+                    android:id="@+id/tvbudget"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnshow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="148dp"
+                android:text="Show" />
         </RelativeLayout>
         <ScrollView
             android:layout_width="fill_parent"
